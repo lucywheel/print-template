@@ -1,0 +1,333 @@
+@page {
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 8pt;
+    line-height: 1.2;
+}
+
+
+/** Paper sizes **/
+
+body.A3 .sheet {
+    width: 297mm;
+    height: 419mm;
+}
+
+body.A3.landscape .sheet {
+    width: 420mm;
+    height: 296mm
+}
+
+body.A4 .sheet {
+    width: 210mm;
+    height: 296mm
+}
+
+body.A4.landscape .sheet {
+    width: 297mm;
+    height: 209mm
+}
+
+body.A5 .sheet {
+    width: 148mm;
+    height: 209mm
+}
+
+body.A5.landscape .sheet {
+    width: 210mm;
+    height: 147mm
+}
+
+body.letter .sheet {
+    width: 216mm;
+    height: 279mm
+}
+
+body.letter.landscape .sheet {
+    width: 280mm;
+    height: 215mm
+}
+
+body.legal .sheet {
+    width: 216mm;
+    height: 356mm
+}
+
+body.legal.landscape .sheet {
+    width: 357mm;
+    height: 215mm
+}
+
+
+/** Padding area **/
+
+.sheet {
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    page-break-after: always;
+    padding: 5.6mm;
+    display: block;
+}
+
+
+/** For screen preview **/
+
+@media screen {
+    body {
+        background: #e0e0e0;
+    }
+    .sheet {
+        background: white;
+        box-shadow: 0 .5mm 2mm rgba(0, 0, 0, .3);
+        margin: 5mm auto;
+    }
+}
+
+
+/** Fix for Chrome issue #273306 **/
+
+@media print {
+    body.A3.landscape {
+        width: 420mm
+    }
+    body.A3,
+    body.A4.landscape {
+        width: 297mm
+    }
+    body.A4,
+    body.A5.landscape {
+        width: 210mm
+    }
+    body.A5 {
+        width: 148mm
+    }
+    body.letter,
+    body.legal {
+        width: 216mm
+    }
+    body.letter.landscape {
+        width: 280mm
+    }
+    body.legal.landscape {
+        width: 357mm
+    }
+}
+
+.leader-left {
+    direction: rtl;
+    font-size: 5pt;
+    line-height: 1.2;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 5.6mm;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.8em;
+    line-height: 1;
+    right: calc(100% + 5.6mm);
+    -ms-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+    white-space: nowrap;
+    transform-origin: right top 0;
+}
+
+.leader-left-column {
+    display: inline-block;
+    vertical-align: bottom;
+    padding: 0.4mm 0.8mm;
+    white-space: normal;
+    direction: ltr;
+}
+
+.leader-right {
+    transform: rotate(90deg);
+    transform-origin: left top 0;
+    font-size: 5pt;
+    position: absolute;
+    left: calc(100% + 5.6mm);
+    top: 0;
+    height: 5.6mm;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 0.8em;
+    line-height: 1;
+}
+
+.columns-group.row {
+    flex: 0 0 auto;
+}
+
+.columns-group .column {}
+
+.box-marker {
+    font-size: 11pt;
+    line-height: 4mm;
+    margin: 0;
+    padding: 0 0 0.4mm;
+    font-weight: bold;
+    max-width: 6mm;
+}
+
+.box-row {
+    line-height: 4mm;
+    height: 4mm;
+    min-height: 4mm;
+    padding-left: 0.8mm;
+    margin: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-content: flex-start;
+    align-items: middle;
+    justify-content: flex-start;
+    border-bottom: 1px solid black;
+}
+
+.box-row * {
+    flex-grow: 0;
+    flex-shrink: 1;
+    margin: auto 0;
+}
+
+.box-row:last-child {
+    border-bottom: 0;
+}
+
+.box.column {
+    padding: 0;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+
+.box.column.column-blank {
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
+.box.column.column-blank:first-child {
+    border-left-width: 1px;
+}
+
+.box {
+    border: 1px solid black;
+    margin: -1px -1px -1px 0;
+}
+
+.box.box-framed {
+    outline: 2px solid black;
+    outline-offset: -2px;
+}
+
+.box.box-bordered {
+    outline: 2px solid black;
+    outline-offset: -2px;
+}
+
+.box-title,
+.box-marker {
+    display: inline-block;
+    vertical-align: top;
+    height: 4mm;
+    line-height: 1;
+    margin: 0;
+    padding: 0 0.8mm;
+}
+
+.box-header {
+    min-height: 4mm;
+    padding-top: 1px;
+    overflow: hidden;
+}
+
+.box-label {
+    font-size: 5pt;
+    cursor: text;
+    padding: 0;
+    margin: auto 0;
+    letter-spacing: 0.1px;
+    white-space: normal;
+    line-height: 1;
+}
+
+.box-label:first-child {
+    padding-right: 0.8mm;
+}
+
+.logo-overlay {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 72px;
+    line-height: 1;
+    color: black;
+    opacity: 0.5;
+}
+
+.main {
+    position: relative;
+}
+
+.main .row {
+    margin: 0;
+    flex-flow: row nowrap;
+    width: 100%;
+}
+
+.sheet-header {
+    padding: 1mm 2mm;
+    font-size: 5pt;
+    line-height: 1;
+    border-left: 1px solid black;
+}
+
+.sheet-header .column {
+    padding: 1mm 4mm;
+    margin: 0;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    align-items: flex-end;
+    display: flex;
+}
+
+.sheet-logo {
+    border-radius: 50%;
+    border: 2px solid black;
+    font-size: 10px;
+    font-weight: bold;
+    margin: auto 4mm 0;
+    display: inline-block;
+    padding: 0.2mm 0.4mm;
+}
+
+.sheet-caption {
+    font-size: 6pt;
+    letter-spacing: 1px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.sheet-watermark {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: black;
+    opacity: 0.25;
+    pointer-events: none;
+    font-size: 72px;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}

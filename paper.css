@@ -10,21 +10,12 @@ body {
     line-height: 1.2;
 }
 
-.sheet {
-    margin: 0;
-    overflow: hidden;
-    position: relative;
-    box-sizing: border-box;
-    page-break-after: always;
-    padding: 5.5mm 6mm 0 6.5mm;
-}
-
 
 /** Paper sizes **/
 
 body.A3 .sheet {
     width: 297mm;
-    height: 419mm
+    height: 419mm;
 }
 
 body.A3.landscape .sheet {
@@ -75,8 +66,14 @@ body.legal.landscape .sheet {
 
 /** Padding area **/
 
-.sheet.padding-10mm {
-    padding: 5.5mm 14mm 23mm 5.5mm
+.sheet {
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    page-break-after: always;
+    padding: 5.6mm;
+    display: block;
 }
 
 
@@ -84,7 +81,7 @@ body.legal.landscape .sheet {
 
 @media screen {
     body {
-        background: #e0e0e0
+        background: #e0e0e0;
     }
     .sheet {
         background: white;
@@ -124,31 +121,53 @@ body.legal.landscape .sheet {
 }
 
 .leader-left {
-    -ms-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
-    -ms-transform-origin: left top 0;
-    -moz-transform-origin: left top 0;
-    -webkit-transform-origin: left top 0;
-    transform-origin: left top 0;
+    direction: rtl;
     font-size: 5pt;
     line-height: 1.2;
-    text-indent: 38.1mm;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 5.6mm;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.8em;
+    line-height: 1;
+    right: calc(100% + 5.6mm);
+    -ms-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+    white-space: nowrap;
+    transform-origin: right top 0;
+}
+
+.leader-left-column {
+    display: inline-block;
+    vertical-align: bottom;
+    padding: 0.4mm 0.8mm;
+    white-space: normal;
+    direction: ltr;
 }
 
 .leader-right {
-    -ms-transform: rotate(-90deg);
-    -moz-transform: rotate(-90deg);
-    -webkit-transform: rotate(-90deg);
-    transform: rotate(-90deg);
-    -ms-transform-origin: right top 0;
-    -moz-transform-origin: right top 0;
-    -webkit-transform-origin: right top 0;
-    transform-origin: right top 0;
+    transform: rotate(90deg);
+    transform-origin: left top 0;
     font-size: 5pt;
-    line-height: 1.2;
+    position: absolute;
+    left: calc(100% + 5.6mm);
+    top: 0;
+    height: 5.6mm;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 0.8em;
+    line-height: 1;
 }
+
+.columns-group.row {
+    flex: 0 0 auto;
+}
+
+.columns-group .column {}
 
 .box-marker {
     font-size: 11pt;
@@ -190,9 +209,18 @@ body.legal.landscape .sheet {
     box-sizing: border-box;
 }
 
+.box.column.column-blank {
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
+.box.column.column-blank:first-child {
+    border-left-width: 1px;
+}
+
 .box {
     border: 1px solid black;
-    margin: 0 -1px -1px 0;
+    margin: -1px -1px -1px 0;
 }
 
 .box.box-framed {
@@ -200,12 +228,11 @@ body.legal.landscape .sheet {
     outline-offset: -2px;
 }
 
-
-}
 .box.box-bordered {
     outline: 2px solid black;
     outline-offset: -2px;
 }
+
 .box-title,
 .box-marker {
     display: inline-block;
@@ -215,11 +242,13 @@ body.legal.landscape .sheet {
     margin: 0;
     padding: 0 0.8mm;
 }
+
 .box-header {
     min-height: 4mm;
-    padding-top: 2px;
+    padding-top: 1px;
     overflow: hidden;
 }
+
 .box-label {
     font-size: 5pt;
     cursor: text;
@@ -229,12 +258,11 @@ body.legal.landscape .sheet {
     white-space: normal;
     line-height: 1;
 }
+
 .box-label:first-child {
     padding-right: 0.8mm;
 }
-.main {
-    position: relative;
-}
+
 .logo-overlay {
     position: absolute;
     left: 50%;
@@ -245,17 +273,24 @@ body.legal.landscape .sheet {
     color: black;
     opacity: 0.5;
 }
+
+.main {
+    position: relative;
+}
+
 .main .row {
     margin: 0;
     flex-flow: row nowrap;
     width: 100%;
 }
+
 .sheet-header {
     padding: 1mm 2mm;
     font-size: 5pt;
     line-height: 1;
     border-left: 1px solid black;
 }
+
 .sheet-header .column {
     padding: 1mm 4mm;
     margin: 0;
@@ -264,6 +299,7 @@ body.legal.landscape .sheet {
     align-items: flex-end;
     display: flex;
 }
+
 .sheet-logo {
     border-radius: 50%;
     border: 2px solid black;
@@ -273,10 +309,25 @@ body.legal.landscape .sheet {
     display: inline-block;
     padding: 0.2mm 0.4mm;
 }
+
 .sheet-caption {
     font-size: 6pt;
     letter-spacing: 1px;
     font-weight: bold;
     margin: 0;
     padding: 0;
+}
+
+.sheet-watermark {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: black;
+    opacity: 0.25;
+    pointer-events: none;
+    font-size: 72px;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
 }
